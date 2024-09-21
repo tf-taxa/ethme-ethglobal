@@ -28,6 +28,92 @@ const constants = {
 
   version: '0.0.1',
 
+  
+  addresses: {
+    1: { // mainnet
+      ensRegistryAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      customResolverAddress: '0x6c8e046d242e73bc8f5ee9148390aa2de1868aca',
+      bulkENSAddress: '0xF674DfcBc1C36FeF2EA3682A6E653E9e1c103BaC',
+    },
+    11155111: { // sepolia
+      ensRegistryAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      customResolverAddress: '0xB39a425cC05862adDc490A42e849406960210911',
+      bulkENSAddress: '0xB5638e686fe7c97d4Ed61Bb7a656b8a6A878B228',
+    }
+  },
+  
+  
+  resolverABI: [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "node",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "key",
+          "type": "string"
+        }
+      ],
+      "name": "text",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "", "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "data",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "multicall",
+      "outputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "results",
+          "type": "bytes[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "node",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "name": "setText",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    { "inputs": [{ "internalType": "bytes32", "name": "node", "type": "bytes32" }], "name": "contenthash", "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }], "stateMutability": "view", "type": "function" }
+  ],
+
   erc721ABI: [
     {
       "constant": true,
@@ -70,6 +156,78 @@ const constants = {
       "stateMutability": "view",
       "type": "function"
     }
+  ],
+
+  ensRegistryABI: [
+    { "constant": false, "inputs": [{ "internalType": "bytes32", "name": "node", "type": "bytes32" }, { "internalType": "bytes32", "name": "label", "type": "bytes32" }, { "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "resolver", "type": "address" }, { "internalType": "uint64", "name": "ttl", "type": "uint64" }], "name": "setSubnodeRecord", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }
+  ],
+
+  bulkENSABI: [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "node",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "subNodeHashes",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "addresses",
+          "type": "address[]"
+        }
+      ],
+      "name": "createBulkSubdomains",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "node",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "nftId",
+          "type": "string"
+        }
+      ],
+      "name": "createSubdomain",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "supportedCollections",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
   ],
 }
 /*
@@ -619,6 +777,30 @@ async function setRegistryAddress() {
 
 function getRegistryAddress() {
   return web3.eth.ens.registryAddress // web3 registry address is set by our config in initializeWeb3
+}
+
+
+async function getCustomResolverAddress() {
+  const network_id = await getNetworkId()
+
+  if (!constants.addresses[network_id]) {
+    console.log(`Selected network ${network_id} not supported`);
+    return false
+  }
+
+  return constants.addresses[network_id].customResolverAddress;
+}
+
+
+async function getBulkENSAddress() {
+  const network_id = await getNetworkId()
+
+  if (!constants.addresses[network_id]) {
+    console.log(`Selected network ${network_id} not supported`);
+    return false
+  }
+
+  return constants.addresses[network_id].bulkENSAddress;
 }
 
 
