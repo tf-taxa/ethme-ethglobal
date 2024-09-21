@@ -28,6 +28,49 @@ const constants = {
 
   version: '0.0.1',
 
+  erc721ABI: [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "type": "function"
+    },
+  ],
+
+  erc1155ABI: [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "uri",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
 }
 /*
 * CONFIG END
@@ -354,6 +397,37 @@ function generateIndexValueURL(index_field, txt_value) {
   }
 }
 
+
+/**
+* ENS avatar field also supports adding images directly from NFT contract.
+* This function fetches metadata from given NFT contract & extracts image.
+*/
+async function fetchImgFromNFT(token_standard, token_contract, token_id) {
+  let token_uri
+
+  // call ERC721 contract with respective ABI
+  if (token_standard == 'erc721') {
+    const erc721Contract = new web3.eth.Contract(constants.erc721ABI, token_contract);
+    token_uri = await erc721Contract.methods.tokenURI(token_id).call();
+  }
+
+  // call ERC1155 contract with respective ABI
+  else if (token_standard == 'erc1155') {
+    const erc1155Contract = new web3.eth.Contract(constants.erc1155ABI, token_contract);
+    token_uri = await erc1155Contract.methods.uri(token_id).call();
+  }
+  console.log(token_uri);
+
+  token_uri = token_uri.startsWith('ipfs://') ? resolveIPFSURL(token_uri) : token_uri
+
+  const response = await fetch(token_uri);
+  const metadata = await response.json();
+  let nft_img = metadata.image
+  console.log(metadata);
+
+  nft_img = nft_img.startsWith('ipfs://') ? resolveIPFSURL(nft_img) : nft_img
+  return nft_img
+}
 
 
 /**
