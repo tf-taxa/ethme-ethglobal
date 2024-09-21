@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eth.Me</title>
+  <link rel="icon" href="https://d2v8vkh7icp2p5.cloudfront.net/images/favicon.ico">
+
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    
+    body {
+      background-color: #efefef;
+    }
+    #ens-avatar {
+      max-width: 200px;
+      box-shadow: 3px 3px 10px #aaa
+    }
+    .logo-heading {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    #ens-links svg {
+      max-width: 15px;
+      margin-top: -5px;
+      margin-left: 2px;
+      opacity: 70%;
+    }
+    #ens-addr {
+      font-size: 0.9rem;
+    }
+
+    .modal-loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-color: #efefef;
+      z-index: 99999;
+    }
+    .container-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: block;
+      text-align: center;
+    }
+    .text-loading {
+      font-family: 'Roboto', sans-serif;
+      font-size: 27px;
+      color: #50555c;
+      margin-top: 0;
+    }
+    .img-loading { 
+      width: 300px;
+    }
+    #lbl-redirecting {
+      font-size: 14px;
+    }
+    .d-none {
+      display: none;
+    }
+  </style>
+</head>
+
+<body onload="initialize()">
+
+  <div class="modal-loading">
+    <div class="container-loading">
+      <img class="img-loading" src="https://d2v8vkh7icp2p5.cloudfront.net/images/ethme_loading.gif" alt="Loading">
+      <!-- <p class="text-loading">Loading <b id="txtensname-loading"></b></p> -->
+      <!-- <p id="lbl-redirecting" class="text-loading d-none">Redirecting ..</p> -->
+    </div>
+  </div>
+
+  <script>
+    // show ensname before loading other scripts
+    // let _ens = location.hostname.split('.')[0] + '.eth';
+    // document.getElementById('txtensname-loading').innerHTML = _ens
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0/web3.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ensdomains/content-hash@2.5.7/dist/index.js"></script>
+
+  <script src="https://d2v8vkh7icp2p5.cloudfront.net/js/app.js?v=1724339314"  type="text/javascript"></script>
+  <script src="https://d2v8vkh7icp2p5.cloudfront.net/js/home.js?v=1724339314"  type="text/javascript"></script>
+</body>
+
+</html>
