@@ -24,7 +24,7 @@ async function initialize() {
     let resolver_address = ens_data.address
     let encoded_content_hash = ens_data.contentHash
     
-    
+
     // 1. if index field present then redirect to index field url
     if (ar_texts && ar_texts.includes('index')) {
       await initializeWeb3(false, true)
@@ -78,19 +78,18 @@ async function initialize() {
 
 
   // TO SHOW LINKS ON PAGE
-  // get text records
-  let text_records = await getTextRecordsForENSName(ens_name)
+  // // get text records
+  // let text_records = await getTextRecordsForENSName(ens_name)
   
-  // update details on frontend
-  if (content_hash || text_records) {
-    renderENSInfo(ens_name, content_hash, text_records)
-  }
-  else {
-    // if content_hash & text_records both are not found then probably resolver is not set 
-    // and/or ens name does not exist
-    $('#loader').addClass('d-none')  
-  }
-
+  // // update details on frontend
+  // if (content_hash || text_records) {
+  //   renderENSInfo(ens_name, content_hash, text_records)
+  // }
+  // else {
+  //   // if content_hash & text_records both are not found then probably resolver is not set 
+  //   // and/or ens name does not exist
+  //   $('#loader').addClass('d-none')  
+  // }
 }
 
 

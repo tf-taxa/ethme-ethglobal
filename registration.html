@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eth.Me - Register NFT Page</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+    #ens-avatar {
+      max-width: 100px;
+      box-shadow: 3px 3px 10px #aaa
+    }
+    .logo-heading {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    #ens-links svg {
+      max-width: 15px;
+      margin-top: -5px;
+      margin-left: 2px;
+      opacity: 70%;
+    }
+    #ens-addr {
+      font-size: 0.9rem;
+    }
+    #ens-name {
+      font-size: 1.5rem;
+    }
+    input {
+      text-align: center;
+    }
+    #frmRegistration {
+      box-shadow: #888 0px 1px 5px;
+    }
+  </style>
+</head>
+
+<body onload="initialize()">
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-4 offset-md-4 text-center">
+        <h1 class="mb-3 logo-heading">Eth.Me</h1>
+        <h2 class="mb-5 logo-heading">Registration</h1>
+        
+        <img id="ens-avatar" src="https://i.seadn.io/gae/Fe0Qa53k7pOaBCGLbp4ztnegwk44UlwEYEC3SwWE64OYyijbheDc0Rz_Ws-RnhU88Fwwd4KYdDQfJtNdoNZST6L8P1fn5PzRbv507Do?auto=format&dpr=1&w=1000" alt="Your Name" class="img-fluid rounded-circle">
+        <!-- <img id="ens-avatar" src="images/user.jpg" alt="Your Name" class="img-fluid rounded-circle"> -->
+        
+        <h2 id="ens-name" class="mt-4 mb-3 text-dark"></h2>
+        <p id="ens-desc" class="text-dark"></p>
+        <a id="ens-addr" target="_blank"></a>
+
+        <form id="frmRegistration" class="mt-4 p-4">
+          <div class="form-group">
+            <label>ENS Name</label>
+            <input type="text" class="form-control" id="txt-ens-name" value="" disabled>
+          </div>
+
+          <p id="msg" class="form-text mt-3 mb-0"></p>
+          <button id="btnConnect" type="button" class="btn btn-primary col-12 mt-3 d-none" onclick="btnConnectWallet()">Connect</button>
+          <button id="btnRegister" type="button" class="btn btn-primary col-12 mt-3 d-none" onclick="btnAddSubdomainToQueue()">
+            Register
+            <svg version="1.1" id="loader" class="d-none" style="width: 30px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+              <path fill="#fff" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                <animateTransform 
+                  attributeName="transform" 
+                  attributeType="XML" 
+                  type="rotate"
+                  dur="1s" 
+                  from="0 50 50"
+                  to="360 50 50" 
+                  repeatCount="indefinite" />
+              </path>
+            </svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.10.4/web3.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+
+  <script src="./js/app.js?v=1714660761"  type="text/javascript"></script>
+</body>
+
+</html>

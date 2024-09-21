@@ -552,6 +552,55 @@ function extractNFTInfoFromURL(location){
 }
 
 
+/* 
+ * Checks if given subname exists or not in defined top domain.
+ * Returns bool true/false.
+ */
+async function checkIfSubdomainExists(collection_name, nft_id){
+  let sub_domain = formatSubdomain(collection_name, nft_id)
+  let full_sub_domain = sub_domain + '.' + constants.top_domain
+
+  // get owner of provided subname
+  let owner = await web3.eth.ens.getOwner(full_sub_domain);
+
+  let subdomain_exists = owner == '0x0000000000000000000000000000000000000000' ? false : true
+  return subdomain_exists
+}
+
+
+/* 
+ * Provides a single point to create subname with standard format from provided collection and nft id.
+ * Use this function to format subname in application.
+ */
+function formatSubdomain(collection_name, nft_id){
+  return collection_name + '-' + nft_id
+}
+
+
+/* 
+ * Connects wallet (metamask) to application if its not connected. 
+ */
+async function connectWallet() {
+  try {
+    if (window.ethereum) {
+      await window.ethereum.enable()
+      return true
+    }
+    return false
+  } 
+  catch (error) {
+    console.log(error);
+    Sentry.captureException(error);
+    return false
+  }
+}
+
+
+async function checkIfWalletConnected() {
+  const accounts = await web3.eth.getAccounts() // returns all connected accounts to this site
+  return accounts.length > 0 ? true : false 
+}
+
 
 /**
 * Sets ENS Registry address according to the selected network
